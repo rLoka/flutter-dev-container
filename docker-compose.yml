@@ -1,0 +1,43 @@
+version: '3.6'
+
+services:
+  app:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    image: flutter_dev
+    container_name: flutter_dev_cont
+    working_dir: /usr/src/app
+    network_mode: "host"
+    privileged: true
+    environment:
+      - DISPLAY=${DISPLAY}
+    depends_on:
+      - emulator
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ../app:/usr/src/app
+      - ./run.sh:/usr/src/app/run.sh
+    tty: true
+    restart: always
+
+  emulator:
+    image: us-docker.pkg.dev/android-emulator-268719/images/30-google-x64:30.1.2
+    container_name: android_emulator_cont
+    network_mode: "host"
+    privileged: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - DISPLAY=${DISPLAY}
+    expose:
+      - 8554/tcp
+      - 5555/tcp
+    devices:
+      - '/dev/kvm:/dev/kvm'
