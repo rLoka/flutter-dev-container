@@ -77,9 +77,10 @@
 		"publisherId": "a606ecbb-a8fb-4c35-b29a-5e8842d82af2",
 		"publisherDisplayName": "Dart Code",
 		"targetPlatform": "undefined",
-		"updated": false,
+		"isApplicationScoped": false,
+		"updated": true,
 		"isPreReleaseVersion": false,
-		"installedTimestamp": 1687615271074,
+		"installedTimestamp": 1687698673888,
 		"preRelease": false
 	}
 }
