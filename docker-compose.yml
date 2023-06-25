@@ -19,7 +19,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
       - .vscode:/home/dev/.vscode
-      - ./run.sh:/usr/src/app/run.sh
+      - ../azarja_app:/usr/src/app
     tty: true
 
   emulator:
