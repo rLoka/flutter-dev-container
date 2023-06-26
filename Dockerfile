@@ -7,6 +7,7 @@ ENV ANDROID_VERSION="33"
 ENV ANDROID_BUILD_TOOLS_VERSION="33.0.2"
 ENV ANDROID_ARCHITECTURE="x86_64"
 ENV ANDROID_SDK_ROOT="/home/dev/android-sdk"
+ENV ANDROID_EMULATOR_IMAGE="system-images;android-33;google_apis_playstore;arm64-v8a"
 ENV FLUTTER_CHANNEL="beta"
 ENV FLUTTER_VERSION="3.12.0"
 ENV GRADLE_VERSION="7.5"
@@ -25,8 +26,6 @@ RUN apt-get update \
     clang \
     coreutils \
     cmake \
-    unzip \
-    sed \
     git \
     gpg \
     gpg-agent \
@@ -38,8 +37,11 @@ RUN apt-get update \
     liblzma-dev \
     ninja-build \
     pkg-config \
+    sed \
     ssh \
     sudo \
+    unzip \
+    usbutils \
     wget \
     xz-utils \    
     xauth \
@@ -82,7 +84,8 @@ RUN mkdir /home/dev/.android \
   && mv $ANDROID_SDK_ROOT/latest $ANDROID_SDK_ROOT/cmdline-tools/latest \
   && yes "y" | sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" \
   && yes "y" | sdkmanager "platforms;android-$ANDROID_VERSION" \
-  && yes "y" | sdkmanager "platform-tools"
+  && yes "y" | sdkmanager "platform-tools" \
+  && yes "y" | sdkmanager --install "$ANDROID_EMULATOR_IMAGE"
 
 # Install Flutter.
 RUN curl -o flutter.tar.xz $FLUTTER_URL \
